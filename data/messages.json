@@ -1,0 +1,113 @@
+{
+  "channels": [
+    {
+      "id": "market-talk",
+      "name": "market-talk",
+      "displayName": "Market Talk",
+      "messages": [
+        {
+          "id": "1",
+          "userId": "trader1",
+          "username": "MarketPro",
+          "avatar": "MP",
+          "content": "ECOM looking strong today! Up 2.35% on good volume.",
+          "timestamp": "2024-01-15T10:30:00Z"
+        },
+        {
+          "id": "2",
+          "userId": "trader2",
+          "username": "EthioInvestor",
+          "avatar": "EI",
+          "content": "Anyone else watching ETHB? Seems oversold after the dip.",
+          "timestamp": "2024-01-15T10:32:00Z"
+        },
+        {
+          "id": "3",
+          "userId": "trader3",
+          "username": "CapitalFlow",
+          "avatar": "CF",
+          "content": "The financial sector is outperforming today. DASH, AWASH, and ABYSS all green.",
+          "timestamp": "2024-01-15T10:35:00Z"
+        },
+        {
+          "id": "4",
+          "userId": "trader1",
+          "username": "MarketPro",
+          "avatar": "MP",
+          "content": "Volume spike on SUN - construction sector getting attention.",
+          "timestamp": "2024-01-15T10:40:00Z"
+        }
+      ]
+    },
+    {
+      "id": "education",
+      "name": "education",
+      "displayName": "Education",
+      "messages": [
+        {
+          "id": "5",
+          "userId": "learner1",
+          "username": "NewTrader",
+          "avatar": "NT",
+          "content": "Just finished the Capital Markets Basics course. Very helpful!",
+          "timestamp": "2024-01-15T09:15:00Z"
+        },
+        {
+          "id": "6",
+          "userId": "learner2",
+          "username": "Student123",
+          "avatar": "S1",
+          "content": "Can someone explain P/E ratio in simple terms?",
+          "timestamp": "2024-01-15T09:20:00Z"
+        },
+        {
+          "id": "7",
+          "userId": "mentor1",
+          "username": "FinanceGuru",
+          "avatar": "FG",
+          "content": "P/E ratio is price per share divided by earnings per share. Lower usually means cheaper, but context matters!",
+          "timestamp": "2024-01-15T09:25:00Z"
+        },
+        {
+          "id": "8",
+          "userId": "learner2",
+          "username": "Student123",
+          "avatar": "S1",
+          "content": "Thanks! That makes sense now.",
+          "timestamp": "2024-01-15T09:26:00Z"
+        }
+      ]
+    },
+    {
+      "id": "analysis",
+      "name": "analysis",
+      "displayName": "Analysis",
+      "messages": [
+        {
+          "id": "9",
+          "userId": "analyst1",
+          "username": "TechAnalyst",
+          "avatar": "TA",
+          "content": "ETEL showing bearish divergence on RSI. Might see a pullback soon.",
+          "timestamp": "2024-01-15T11:00:00Z"
+        },
+        {
+          "id": "10",
+          "userId": "analyst2",
+          "username": "ChartMaster",
+          "avatar": "CM",
+          "content": "Agreed. Support at 285 looks strong though. Watch for bounce.",
+          "timestamp": "2024-01-15T11:05:00Z"
+        },
+        {
+          "id": "11",
+          "userId": "analyst3",
+          "username": "FundamentalFan",
+          "avatar": "FF",
+          "content": "From a fundamental perspective, ETEL's P/E of 22.1 seems reasonable for the sector.",
+          "timestamp": "2024-01-15T11:10:00Z"
+        }
+      ]
+    }
+  ]
+}

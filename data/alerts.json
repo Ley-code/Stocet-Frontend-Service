@@ -1,0 +1,52 @@
+[
+  {
+    "id": "1",
+    "symbol": "ECOM",
+    "type": "price",
+    "condition": "above",
+    "threshold": 250.00,
+    "status": "active",
+    "createdAt": "2024-01-10T08:00:00Z",
+    "triggeredAt": null
+  },
+  {
+    "id": "2",
+    "symbol": "ETHB",
+    "type": "price",
+    "condition": "below",
+    "threshold": 180.00,
+    "status": "triggered",
+    "createdAt": "2024-01-08T10:00:00Z",
+    "triggeredAt": "2024-01-12T14:30:00Z"
+  },
+  {
+    "id": "3",
+    "symbol": "DASH",
+    "type": "volume",
+    "condition": "above",
+    "threshold": 100000,
+    "status": "active",
+    "createdAt": "2024-01-14T09:00:00Z",
+    "triggeredAt": null
+  },
+  {
+    "id": "4",
+    "symbol": "AWASH",
+    "type": "price",
+    "condition": "above",
+    "threshold": 190.00,
+    "status": "triggered",
+    "createdAt": "2024-01-11T11:00:00Z",
+    "triggeredAt": "2024-01-15T10:20:00Z"
+  },
+  {
+    "id": "5",
+    "symbol": "ETEL",
+    "type": "price",
+    "condition": "below",
+    "threshold": 300.00,
+    "status": "active",
+    "createdAt": "2024-01-13T15:00:00Z",
+    "triggeredAt": null
+  }
+]

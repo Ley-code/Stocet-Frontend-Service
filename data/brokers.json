@@ -1,0 +1,182 @@
+[
+  {
+    "id": "1",
+    "name": "Awash Investment Bank",
+    "license": "Active",
+    "type": "Full Service",
+    "clientType": "Both",
+    "services": ["Equity Trading", "Fixed Income", "Research", "Advisory", "Portfolio Management"],
+    "minAccount": 50000,
+    "contact": {
+      "phone": "+251 11 123 4567",
+      "email": "info@awashinvestment.et",
+      "website": "www.awashinvestment.et"
+    },
+    "description": "Leading full-service investment bank with comprehensive market research and advisory services."
+  },
+  {
+    "id": "2",
+    "name": "Dashen Securities",
+    "license": "Active",
+    "type": "Full Service",
+    "clientType": "Both",
+    "services": ["Equity Trading", "Fixed Income", "Research", "Advisory"],
+    "minAccount": 100000,
+    "contact": {
+      "phone": "+251 11 234 5678",
+      "email": "trading@dashensecurities.et",
+      "website": "www.dashensecurities.et"
+    },
+    "description": "Premier brokerage firm offering institutional-grade trading and research capabilities."
+  },
+  {
+    "id": "3",
+    "name": "Zemen Capital",
+    "license": "Active",
+    "type": "Discount",
+    "clientType": "Retail",
+    "services": ["Equity Trading", "Online Platform"],
+    "minAccount": 10000,
+    "contact": {
+      "phone": "+251 11 345 6789",
+      "email": "support@zemencapital.et",
+      "website": "www.zemencapital.et"
+    },
+    "description": "Low-cost online trading platform for retail investors with competitive commission rates."
+  },
+  {
+    "id": "4",
+    "name": "Nib Securities",
+    "license": "Active",
+    "type": "Full Service",
+    "clientType": "Both",
+    "services": ["Equity Trading", "Fixed Income", "Research", "Advisory", "Derivatives"],
+    "minAccount": 75000,
+    "contact": {
+      "phone": "+251 11 456 7890",
+      "email": "info@nibsecurities.et",
+      "website": "www.nibsecurities.et"
+    },
+    "description": "Full-service broker with expertise in derivatives and structured products."
+  },
+  {
+    "id": "5",
+    "name": "Abyssinia Trading",
+    "license": "Active",
+    "type": "Discount",
+    "clientType": "Retail",
+    "services": ["Equity Trading", "Online Platform", "Mobile App"],
+    "minAccount": 5000,
+    "contact": {
+      "phone": "+251 11 567 8901",
+      "email": "trade@abyssiniatrading.et",
+      "website": "www.abyssiniatrading.et"
+    },
+    "description": "Mobile-first discount broker with user-friendly trading app and low fees."
+  },
+  {
+    "id": "6",
+    "name": "Ethiopian Capital Markets",
+    "license": "Active",
+    "type": "Full Service",
+    "clientType": "Institutional",
+    "services": ["Equity Trading", "Fixed Income", "Research", "Advisory", "Prime Brokerage"],
+    "minAccount": 500000,
+    "contact": {
+      "phone": "+251 11 678 9012",
+      "email": "institutional@ecm.et",
+      "website": "www.ecm.et"
+    },
+    "description": "Institutional-focused broker providing prime brokerage and execution services."
+  },
+  {
+    "id": "7",
+    "name": "Union Securities",
+    "license": "Active",
+    "type": "Full Service",
+    "clientType": "Both",
+    "services": ["Equity Trading", "Fixed Income", "Research", "Advisory"],
+    "minAccount": 25000,
+    "contact": {
+      "phone": "+251 11 789 0123",
+      "email": "info@unionsecurities.et",
+      "website": "www.unionsecurities.et"
+    },
+    "description": "Established broker with strong research team and personalized service."
+  },
+  {
+    "id": "8",
+    "name": "QuickTrade Ethiopia",
+    "license": "Active",
+    "type": "Discount",
+    "clientType": "Retail",
+    "services": ["Equity Trading", "Online Platform"],
+    "minAccount": 15000,
+    "contact": {
+      "phone": "+251 11 890 1234",
+      "email": "support@quicktrade.et",
+      "website": "www.quicktrade.et"
+    },
+    "description": "Fast and affordable online trading platform for active retail traders."
+  },
+  {
+    "id": "9",
+    "name": "CBE Investment Services",
+    "license": "Active",
+    "type": "Full Service",
+    "clientType": "Both",
+    "services": ["Equity Trading", "Fixed Income", "Research", "Advisory", "Wealth Management"],
+    "minAccount": 100000,
+    "contact": {
+      "phone": "+251 11 901 2345",
+      "email": "investment@cbe.et",
+      "website": "www.cbeinvestment.et"
+    },
+    "description": "Comprehensive investment services with wealth management and advisory capabilities."
+  },
+  {
+    "id": "10",
+    "name": "Enat Securities",
+    "license": "Active",
+    "type": "Full Service",
+    "clientType": "Both",
+    "services": ["Equity Trading", "Research", "Advisory"],
+    "minAccount": 30000,
+    "contact": {
+      "phone": "+251 11 012 3456",
+      "email": "trading@enatsecurities.et",
+      "website": "www.enatsecurities.et"
+    },
+    "description": "Full-service broker with focus on equity trading and market research."
+  },
+  {
+    "id": "11",
+    "name": "TradeEasy",
+    "license": "Active",
+    "type": "Discount",
+    "clientType": "Retail",
+    "services": ["Equity Trading", "Online Platform", "Educational Resources"],
+    "minAccount": 8000,
+    "contact": {
+      "phone": "+251 11 111 2222",
+      "email": "hello@tradeeasy.et",
+      "website": "www.tradeeasy.et"
+    },
+    "description": "Beginner-friendly discount broker with educational resources and low barriers to entry."
+  },
+  {
+    "id": "12",
+    "name": "Capital Partners Ethiopia",
+    "license": "Active",
+    "type": "Full Service",
+    "clientType": "Institutional",
+    "services": ["Equity Trading", "Fixed Income", "Research", "Advisory", "Corporate Finance"],
+    "minAccount": 1000000,
+    "contact": {
+      "phone": "+251 11 222 3333",
+      "email": "institutional@capitalpartners.et",
+      "website": "www.capitalpartners.et"
+    },
+    "description": "Elite institutional broker providing corporate finance and capital markets expertise."
+  }
+]

@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 40% 5%;
+    --foreground: 210 40% 98%;
+    --card: 210 40% 8%;
+    --card-foreground: 210 40% 98%;
+    --popover: 210 40% 8%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 14 100% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 40% 15%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 210 40% 12%;
+    --muted-foreground: 210 40% 65%;
+    --accent: 188 100% 45%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 210 40% 20%;
+    --input: 210 40% 20%;
+    --ring: 14 100% 60%;
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-terminal-bg text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer utilities {
+  .font-mono-numeric {
+    font-family: 'JetBrains Mono', monospace;
+    font-variant-numeric: tabular-nums;
+  }
+}

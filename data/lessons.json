@@ -1,0 +1,178 @@
+{
+  "courses": [
+    {
+      "id": "basics",
+      "title": "Capital Markets Basics",
+      "description": "Learn the fundamentals of capital markets, stocks, bonds, and how markets work.",
+      "duration": "2 hours",
+      "lessons": [
+        {
+          "id": "basics-1",
+          "title": "What are Capital Markets?",
+          "content": "Capital markets are financial markets where long-term debt or equity-backed securities are bought and sold. They channel savings and investments between suppliers of capital (investors) and users of capital (companies, governments).\n\nKey components:\n- Primary markets: Where new securities are issued\n- Secondary markets: Where existing securities are traded\n- Stock exchanges: Organized markets for trading\n- Over-the-counter (OTC) markets: Decentralized trading\n\nThe Ethiopian Securities Exchange (ESX) is the primary stock exchange in Ethiopia, facilitating trading of equities and other securities.",
+          "quiz": {
+            "questions": [
+              {
+                "question": "What is the primary function of capital markets?",
+                "options": ["To channel savings to investments", "To provide banking services", "To manage currency exchange", "To regulate businesses"],
+                "correct": 0
+              },
+              {
+                "question": "Where are new securities first issued?",
+                "options": ["Secondary market", "Primary market", "OTC market", "Banking system"],
+                "correct": 1
+              }
+            ]
+          }
+        },
+        {
+          "id": "basics-2",
+          "title": "Understanding Stocks and Shares",
+          "content": "A stock represents ownership in a company. When you buy a share of stock, you become a partial owner (shareholder) of that company.\n\nKey concepts:\n- Common stock: Basic ownership with voting rights\n- Preferred stock: Priority in dividends but limited voting\n- Market capitalization: Total value of all shares\n- Dividends: Periodic payments to shareholders\n\nStock prices fluctuate based on:\n- Company performance\n- Market sentiment\n- Economic conditions\n- Supply and demand",
+          "quiz": {
+            "questions": [
+              {
+                "question": "What does owning a share of stock mean?",
+                "options": ["You loaned money to the company", "You own part of the company", "You have a contract with the company", "You are a creditor"],
+                "correct": 1
+              },
+              {
+                "question": "What is market capitalization?",
+                "options": ["The price of one share", "Total value of all shares", "Company revenue", "Number of employees"],
+                "correct": 1
+              }
+            ]
+          }
+        },
+        {
+          "id": "basics-3",
+          "title": "How Stock Exchanges Work",
+          "content": "Stock exchanges provide a regulated marketplace where buyers and sellers can trade securities.\n\nThe trading process:\n1. Orders are placed (buy or sell)\n2. Orders are matched by price and time\n3. Trade is executed\n4. Settlement occurs (typically T+2)\n\nOrder types:\n- Market order: Execute immediately at current price\n- Limit order: Execute only at specified price\n- Stop order: Trigger when price reaches level\n\nKey participants:\n- Retail investors\n- Institutional investors\n- Market makers\n- Brokers",
+          "quiz": {
+            "questions": [
+              {
+                "question": "What is a market order?",
+                "options": ["Order to buy at specific price", "Order to execute immediately", "Order to sell in future", "Order for specific quantity"],
+                "correct": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "market-data",
+      "title": "How to Read Market Data",
+      "description": "Master the art of reading stock quotes, charts, and financial metrics.",
+      "duration": "1.5 hours",
+      "lessons": [
+        {
+          "id": "market-data-1",
+          "title": "Understanding Stock Quotes",
+          "content": "A stock quote displays key information about a security:\n\n- Symbol: Ticker symbol (e.g., ECOM)\n- Last Price: Most recent trade price\n- Change: Price change from previous close\n- Change %: Percentage change\n- Volume: Number of shares traded\n- Bid: Highest price buyers will pay\n- Ask: Lowest price sellers will accept\n- 52W High/Low: Highest and lowest prices in past year\n\nExample: ECOM 245.50 +2.35 (+0.97%) Vol: 125,000\nThis means Ethiopian Commercial Bank stock is trading at 245.50, up 2.35 (0.97%) from yesterday, with 125,000 shares traded.",
+          "quiz": {
+            "questions": [
+              {
+                "question": "What does 'Bid' represent?",
+                "options": ["Price sellers want", "Price buyers will pay", "Current market price", "Yesterday's closing price"],
+                "correct": 1
+              }
+            ]
+          }
+        },
+        {
+          "id": "market-data-2",
+          "title": "Reading Price Charts",
+          "content": "Price charts visualize stock price movements over time.\n\nChart types:\n- Line chart: Shows closing prices over time\n- Candlestick: Shows open, high, low, close\n- Bar chart: Similar to candlestick\n- Volume chart: Shows trading volume\n\nTimeframes:\n- Intraday: Minutes, hours\n- Daily: Days, weeks\n- Weekly: Months, years\n\nKey patterns:\n- Uptrend: Higher highs and higher lows\n- Downtrend: Lower highs and lower lows\n- Support: Price level where buying occurs\n- Resistance: Price level where selling occurs",
+          "quiz": {
+            "questions": [
+              {
+                "question": "What does an uptrend show?",
+                "options": ["Lower highs and lower lows", "Higher highs and higher lows", "Flat price movement", "Volatile swings"],
+                "correct": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "risk",
+      "title": "Risk & Portfolio Basics",
+      "description": "Learn about investment risk, diversification, and portfolio management principles.",
+      "duration": "2.5 hours",
+      "lessons": [
+        {
+          "id": "risk-1",
+          "title": "Understanding Investment Risk",
+          "content": "All investments carry risk. Understanding risk is crucial for making informed decisions.\n\nTypes of risk:\n- Market risk: Overall market movements\n- Company risk: Specific company problems\n- Sector risk: Industry-wide issues\n- Liquidity risk: Difficulty selling quickly\n- Currency risk: Exchange rate fluctuations\n\nRisk-return relationship:\n- Higher potential returns = Higher risk\n- Lower risk = Lower potential returns\n- Diversification reduces risk\n\nRisk tolerance:\n- Conservative: Low risk, stable returns\n- Moderate: Balanced risk and return\n- Aggressive: High risk, high return potential",
+          "quiz": {
+            "questions": [
+              {
+                "question": "What is the relationship between risk and return?",
+                "options": ["No relationship", "Higher risk = Higher return potential", "Lower risk = Higher return", "Risk doesn't matter"],
+                "correct": 1
+              }
+            ]
+          }
+        },
+        {
+          "id": "risk-2",
+          "title": "Diversification Strategies",
+          "content": "Diversification spreads risk across different investments.\n\nBenefits:\n- Reduces impact of single stock decline\n- Smooths portfolio returns\n- Protects against sector downturns\n\nDiversification methods:\n- Across sectors: Financial, Tech, Healthcare, etc.\n- Across companies: Multiple stocks\n- Across asset classes: Stocks, bonds, cash\n- Across geographies: Different markets\n\nPortfolio allocation:\n- Age-based: Younger = more stocks\n- Risk-based: Match your tolerance\n- Goal-based: Align with objectives\n\nRemember: Don't put all eggs in one basket!",
+          "quiz": {
+            "questions": [
+              {
+                "question": "What is the main benefit of diversification?",
+                "options": ["Guaranteed returns", "Reduced risk", "Higher profits", "Tax benefits"],
+                "correct": 1
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Stock",
+      "definition": "A security representing ownership in a corporation."
+    },
+    {
+      "term": "Dividend",
+      "definition": "A payment made by a corporation to its shareholders, usually as a distribution of profits."
+    },
+    {
+      "term": "Market Cap",
+      "definition": "Total market value of a company's outstanding shares, calculated as share price × number of shares."
+    },
+    {
+      "term": "P/E Ratio",
+      "definition": "Price-to-Earnings ratio, calculated as market price per share divided by earnings per share."
+    },
+    {
+      "term": "Volume",
+      "definition": "The number of shares or contracts traded in a security during a given period."
+    },
+    {
+      "term": "Bid",
+      "definition": "The highest price a buyer is willing to pay for a security."
+    },
+    {
+      "term": "Ask",
+      "definition": "The lowest price a seller is willing to accept for a security."
+    },
+    {
+      "term": "Spread",
+      "definition": "The difference between the bid and ask prices."
+    },
+    {
+      "term": "Bull Market",
+      "definition": "A market condition characterized by rising prices and investor optimism."
+    },
+    {
+      "term": "Bear Market",
+      "definition": "A market condition characterized by falling prices and investor pessimism."
+    }
+  ]
+}

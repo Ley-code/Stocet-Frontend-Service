@@ -1,15 +1,57 @@
 'use client'
 
-import { generatePriceHistory } from '@/lib/mock-data'
+import { usePriceHistory } from '@/lib/hooks/useMarketPrices'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { formatCurrency } from '@/lib/utils'
+import { Skeleton } from '@/components/ui/skeleton'
+import { useMemo } from 'react'
 
 interface PriceChartProps {
   symbol: string
 }
 
 export function PriceChart({ symbol }: PriceChartProps) {
-  const data = generatePriceHistory(symbol, 30)
+  // Fetch last 30 days of price history
+  const endDate = new Date()
+  const startDate = new Date()
+  startDate.setDate(startDate.getDate() - 30)
+
+  const { data: historyData, isLoading, error } = usePriceHistory(
+    symbol,
+    {
+      start_date: startDate.toISOString(),
+      end_date: endDate.toISOString(),
+    }
+  )
+
+  // Transform API data to chart format
+  const data = useMemo(() => {
+    if (!historyData) return []
+
+    return historyData.prices
+      .map((price) => ({
+        date: new Date(price.timestamp).toISOString().split('T')[0],
+        price: price.price,
+        timestamp: price.timestamp,
+      }))
+      .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())
+  }, [historyData])
+
+  if (isLoading) {
+    return <Skeleton className="h-[300px] w-full" />
+  }
+
+  if (error || !data.length) {
+    return (
+      <div className="flex h-[300px] items-center justify-center rounded-lg border border-terminal-border bg-terminal-surface">
+        <div className="text-center">
+          <p className="text-muted-foreground">
+            {error instanceof Error ? error.message : 'No price history available'}
+          </p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <ResponsiveContainer width="100%" height={300}>

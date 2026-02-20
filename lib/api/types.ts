@@ -42,3 +42,34 @@ export const NEWS_SOURCES = [
 
 export type NewsCategory = typeof NEWS_CATEGORIES[number]
 export type NewsSource = typeof NEWS_SOURCES[number]
+
+// Market Prices API Types
+export interface MarketPrice {
+  ticker_symbol: string
+  price: number
+  percent_change: number
+  variation: number
+  timestamp: string
+  source: string
+}
+
+export interface MarketPriceListResponse {
+  prices: MarketPrice[]
+  total: number
+}
+
+export interface TickerListResponse {
+  tickers: string[]
+  total: number
+}
+
+export interface PriceHistoryResponse {
+  ticker_symbol: string
+  prices: MarketPrice[]
+  total: number
+}
+
+export interface PriceHistoryFilters {
+  start_date?: string
+  end_date?: string
+}

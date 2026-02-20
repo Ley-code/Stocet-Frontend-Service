@@ -4,13 +4,25 @@ import { useState } from 'react'
 import { StocksTable } from '@/components/market-data/StocksTable'
 import { StockDetailPanel } from '@/components/market-data/StockDetailPanel'
 import { useStore } from '@/lib/store'
-import { Stock } from '@/lib/mock-data'
+
+// StockRow type matching StocksTable
+interface StockRow {
+  symbol: string
+  name: string
+  sector: string
+  lastPrice: number
+  change: number
+  changePercent: number
+  volume: number
+  timestamp: string
+  source: string
+}
 
 export default function MarketDataPage() {
   const { selectedStock, setSelectedStock } = useStore()
   const [detailOpen, setDetailOpen] = useState(false)
 
-  const handleRowClick = (stock: Stock) => {
+  const handleRowClick = (stock: StockRow) => {
     setSelectedStock(stock.symbol)
     setDetailOpen(true)
   }

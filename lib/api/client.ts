@@ -1,4 +1,12 @@
-import { NewsResponse, NewsFilters } from './types'
+import {
+  NewsResponse,
+  NewsFilters,
+  MarketPriceListResponse,
+  TickerListResponse,
+  MarketPrice,
+  PriceHistoryResponse,
+  PriceHistoryFilters,
+} from './types'
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_NEWS_API_URL || 'http://localhost:8000'
 const API_VERSION = process.env.NEXT_PUBLIC_NEWS_API_VERSION || 'v1'
@@ -79,6 +87,114 @@ export async function fetchNewsHealth(): Promise<{ status: string }> {
       `Health check failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
       0,
       'Health Check Error'
+    )
+  }
+}
+
+// Market Prices API Functions
+export async function fetchMarketPrices(): Promise<MarketPriceListResponse> {
+  const url = `${API_BASE_URL}/api/${API_VERSION}/market-prices`
+
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+      },
+      next: { revalidate: 60 }, // Revalidate every minute (prices change frequently)
+    })
+
+    return handleResponse<MarketPriceListResponse>(response)
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error
+    }
+    throw new ApiError(
+      `Network error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      0,
+      'Network Error'
+    )
+  }
+}
+
+export async function fetchTickers(): Promise<TickerListResponse> {
+  const url = `${API_BASE_URL}/api/${API_VERSION}/market-prices/tickers`
+
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+      },
+      next: { revalidate: 300 }, // Revalidate every 5 minutes (ticker list changes infrequently)
+    })
+
+    return handleResponse<TickerListResponse>(response)
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error
+    }
+    throw new ApiError(
+      `Network error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      0,
+      'Network Error'
+    )
+  }
+}
+
+export async function fetchTickerPrice(ticker: string): Promise<MarketPrice> {
+  const url = `${API_BASE_URL}/api/${API_VERSION}/market-prices/${encodeURIComponent(ticker)}`
+
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+      },
+      next: { revalidate: 60 }, // Revalidate every minute
+    })
+
+    return handleResponse<MarketPrice>(response)
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error
+    }
+    throw new ApiError(
+      `Network error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      0,
+      'Network Error'
+    )
+  }
+}
+
+export async function fetchPriceHistory(
+  ticker: string,
+  filters: PriceHistoryFilters = {}
+): Promise<PriceHistoryResponse> {
+  const params = new URLSearchParams()
+  if (filters.start_date) params.append('start_date', filters.start_date)
+  if (filters.end_date) params.append('end_date', filters.end_date)
+
+  const url = `${API_BASE_URL}/api/${API_VERSION}/market-prices/${encodeURIComponent(ticker)}/history${params.toString() ? `?${params.toString()}` : ''}`
+
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+      },
+      next: { revalidate: 300 }, // Revalidate every 5 minutes (historical data changes less frequently)
+    })
+
+    return handleResponse<PriceHistoryResponse>(response)
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error
+    }
+    throw new ApiError(
+      `Network error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      0,
+      'Network Error'
     )
   }
 }

@@ -4,6 +4,7 @@ import './globals.css'
 import { SidebarNav } from '@/components/layout/SidebarNav'
 import { TerminalHeader } from '@/components/layout/TerminalHeader'
 import { KeyboardShortcuts } from '@/components/shared/KeyboardShortcuts'
+import { QueryProvider } from '@/lib/providers/QueryProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,16 +21,18 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={inter.className}>
-        <div className="flex h-screen overflow-hidden">
-          <SidebarNav />
-          <div className="flex flex-1 flex-col md:ml-64">
-            <TerminalHeader />
-            <main className="flex-1 overflow-y-auto bg-terminal-bg p-6">
-              {children}
-            </main>
+        <QueryProvider>
+          <div className="flex h-screen overflow-hidden">
+            <SidebarNav />
+            <div className="flex flex-1 flex-col md:ml-64">
+              <TerminalHeader />
+              <main className="flex-1 overflow-y-auto bg-terminal-bg p-6">
+                {children}
+              </main>
+            </div>
           </div>
-        </div>
-        <KeyboardShortcuts />
+          <KeyboardShortcuts />
+        </QueryProvider>
       </body>
     </html>
   )

@@ -1,9 +1,9 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { useRouter } from 'next/navigation'
-import { Search, LayoutDashboard, BarChart3, BookOpen, Building2, MessageSquare, Bell } from 'lucide-react'
+import { Search, LayoutDashboard, BarChart3, BookOpen, Building2, MessageSquare, Bell, Newspaper } from 'lucide-react'
 
 interface Shortcut {
   key: string
@@ -16,15 +16,16 @@ export function KeyboardShortcuts() {
   const [open, setOpen] = useState(false)
   const router = useRouter()
 
-  const shortcuts: Shortcut[] = [
+  const shortcuts = useMemo<Shortcut[]>(() => [
     { key: 'G D', description: 'Go to Dashboard', action: () => router.push('/'), icon: <LayoutDashboard className="h-4 w-4" /> },
     { key: 'G M', description: 'Go to Market Data', action: () => router.push('/market-data'), icon: <BarChart3 className="h-4 w-4" /> },
     { key: 'G A', description: 'Go to Analytics', action: () => router.push('/analytics'), icon: <BarChart3 className="h-4 w-4" /> },
+    { key: 'G N', description: 'Go to News', action: () => router.push('/news'), icon: <Newspaper className="h-4 w-4" /> },
     { key: 'G E', description: 'Go to Education', action: () => router.push('/education'), icon: <BookOpen className="h-4 w-4" /> },
     { key: 'G B', description: 'Go to Brokers', action: () => router.push('/brokers'), icon: <Building2 className="h-4 w-4" /> },
     { key: 'G C', description: 'Go to Chat', action: () => router.push('/chat'), icon: <MessageSquare className="h-4 w-4" /> },
     { key: 'G L', description: 'Go to Alerts', action: () => router.push('/alerts'), icon: <Bell className="h-4 w-4" /> },
-  ]
+  ], [router])
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -57,7 +58,7 @@ export function KeyboardShortcuts() {
 
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [open, router])
+  }, [open, shortcuts])
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

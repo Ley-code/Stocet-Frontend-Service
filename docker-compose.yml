@@ -1,15 +1,19 @@
-version: '3.8'
-
 services:
   stocet:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - NEXT_PUBLIC_NEWS_API_URL=${NEXT_PUBLIC_NEWS_API_URL:-http://localhost:8000}
+        - NEXT_PUBLIC_NEWS_API_VERSION=${NEXT_PUBLIC_NEWS_API_VERSION:-v1}
     container_name: stocet-app
     ports:
       - "3000:3000"
     environment:
-      - NODE_ENV=production
+      - NEXT_PUBLIC_NEWS_API_URL=${NEXT_PUBLIC_NEWS_API_URL:-http://localhost:8000}
+      - NEXT_PUBLIC_NEWS_API_VERSION=${NEXT_PUBLIC_NEWS_API_VERSION:-v1}
+    env_file:
+      - .env
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000"]

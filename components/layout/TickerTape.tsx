@@ -7,11 +7,23 @@ import { PriceChangeBadge } from '@/components/shared/PriceChangeBadge'
 
 export function TickerTape() {
   const [tickerItems, setTickerItems] = useState(stocksData)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
     // Duplicate items for seamless scroll
     setTickerItems([...stocksData, ...stocksData])
   }, [])
+
+  if (!mounted) {
+    return (
+      <div className="relative h-8 overflow-hidden border-b border-terminal-border bg-terminal-surface">
+        <div className="flex items-center justify-center h-full">
+          <div className="text-xs text-muted-foreground">Loading ticker...</div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="relative h-8 overflow-hidden border-b border-terminal-border bg-terminal-surface">

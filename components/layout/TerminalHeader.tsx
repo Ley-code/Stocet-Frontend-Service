@@ -7,14 +7,22 @@ import { stocksData } from '@/lib/mock-data'
 import { formatCurrency, formatPercent } from '@/lib/utils'
 
 export function TerminalHeader() {
-  const [time, setTime] = useState(new Date())
+  const [mounted, setMounted] = useState(false)
+  const [time, setTime] = useState<Date | null>(null)
   const [marketStatus, setMarketStatus] = useState<'open' | 'closed'>('open')
 
   useEffect(() => {
+    setMounted(true)
+    const now = new Date()
+    setTime(now)
+    const hour = now.getHours()
+    setMarketStatus(hour >= 9 && hour < 16 ? 'open' : 'closed')
+
     const timer = setInterval(() => {
-      setTime(new Date())
-      const hour = new Date().getHours()
-      setMarketStatus(hour >= 9 && hour < 16 ? 'open' : 'closed')
+      const currentTime = new Date()
+      setTime(currentTime)
+      const currentHour = currentTime.getHours()
+      setMarketStatus(currentHour >= 9 && currentHour < 16 ? 'open' : 'closed')
     }, 1000)
 
     return () => clearInterval(timer)
@@ -55,7 +63,7 @@ export function TerminalHeader() {
           </div>
         </div>
         <div className="font-mono-numeric text-xs text-muted-foreground">
-          {formatTime(time)}
+          {mounted && time ? formatTime(time) : '--:--:--'}
         </div>
       </div>
       <TickerTape />

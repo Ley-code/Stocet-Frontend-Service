@@ -10,6 +10,7 @@ import {
   Building2,
   MessageSquare,
   Bell,
+  Newspaper,
   Menu,
   X,
 } from 'lucide-react'
@@ -21,6 +22,7 @@ const navItems = [
   { href: '/', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/market-data', label: 'Market Data', icon: BarChart3 },
   { href: '/analytics', label: 'Analytics', icon: TrendingUp },
+  { href: '/news', label: 'News', icon: Newspaper },
   { href: '/education', label: 'Education', icon: BookOpen },
   { href: '/brokers', label: 'Brokers', icon: Building2 },
   { href: '/chat', label: 'Community Chat', icon: MessageSquare },

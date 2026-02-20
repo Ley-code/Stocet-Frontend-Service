@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { Stock, Message, Alert } from './mock-data'
 import { messagesData, alertsData } from './mock-data'
+import { NewsFilters } from './api/types'
 
 interface AppState {
   // Watchlist
@@ -23,6 +24,15 @@ interface AppState {
   alerts: Alert[]
   addAlert: (alert: Omit<Alert, 'id' | 'createdAt' | 'triggeredAt' | 'status'>) => void
   removeAlert: (id: string) => void
+  
+  // News
+  newsFilters: NewsFilters
+  setNewsFilters: (filters: NewsFilters) => void
+  newsViewMode: 'grid' | 'list'
+  setNewsViewMode: (mode: 'grid' | 'list') => void
+  bookmarkedNews: string[] // URLs of bookmarked articles
+  addBookmark: (url: string) => void
+  removeBookmark: (url: string) => void
   
   // UI State
   sidebarOpen: boolean
@@ -96,6 +106,26 @@ export const useStore = create<AppState>()(
           alerts: state.alerts.filter((a) => a.id !== id),
         })),
       
+      // News
+      newsFilters: {
+        limit: 12,
+        skip: 0,
+      },
+      setNewsFilters: (filters) => set({ newsFilters: filters }),
+      newsViewMode: 'grid',
+      setNewsViewMode: (mode) => set({ newsViewMode: mode }),
+      bookmarkedNews: [],
+      addBookmark: (url) =>
+        set((state) => ({
+          bookmarkedNews: state.bookmarkedNews.includes(url)
+            ? state.bookmarkedNews
+            : [...state.bookmarkedNews, url],
+        })),
+      removeBookmark: (url) =>
+        set((state) => ({
+          bookmarkedNews: state.bookmarkedNews.filter((u) => u !== url),
+        })),
+      
       // UI State
       sidebarOpen: true,
       setSidebarOpen: (open) => set({ sidebarOpen: open }),
@@ -107,6 +137,9 @@ export const useStore = create<AppState>()(
       partialize: (state) => ({
         watchlist: state.watchlist,
         alerts: state.alerts,
+        newsFilters: state.newsFilters,
+        newsViewMode: state.newsViewMode,
+        bookmarkedNews: state.bookmarkedNews,
       }),
     }
   )

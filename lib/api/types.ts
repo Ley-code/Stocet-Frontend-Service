@@ -73,3 +73,17 @@ export interface PriceHistoryFilters {
   start_date?: string
   end_date?: string
 }
+
+export interface TechnicalIndicatorsResponse {
+  ticker_symbol: string
+  period_days: number
+  data_points: number
+  sma_20: number | null
+  ema_20: number | null
+  rsi_14: number | null
+  rsi_signal: string | null // "overbought", "oversold", "neutral"
+  latest_price: number | null
+  price_change: number | null
+  price_change_percent: number | null
+}
+

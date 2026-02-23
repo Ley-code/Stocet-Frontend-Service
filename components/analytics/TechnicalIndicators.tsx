@@ -3,27 +3,47 @@
 import { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { generatePriceHistory, calculateSMA, calculateEMA, calculateRSI } from '@/lib/mock-data'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { useTickers, useTechnicalIndicators } from '@/lib/hooks/useMarketPrices'
+import { cn } from '@/lib/utils'
 
-interface TechnicalIndicatorsProps {
-  symbol: string
-}
+export function TechnicalIndicators() {
+  const { data: tickerData } = useTickers()
+  const [selectedSymbol, setSelectedSymbol] = useState<string>('')
+  const [showSMA, setShowSMA] = useState(true)
+  const [showEMA, setShowEMA] = useState(true)
+  const [showRSI, setShowRSI] = useState(true)
 
-export function TechnicalIndicators({ symbol }: TechnicalIndicatorsProps) {
-  const [showSMA, setShowSMA] = useState(false)
-  const [showEMA, setShowEMA] = useState(false)
-  const [showRSI, setShowRSI] = useState(false)
+  const tickers = tickerData?.tickers || []
+  const activeSymbol = selectedSymbol || tickers[0] || ''
 
-  const priceHistory = generatePriceHistory(symbol, 30)
-  const prices = priceHistory.map((d) => d.price)
-  const sma20 = calculateSMA(prices, 20)
-  const ema20 = calculateEMA(prices, 20)
-  const rsi = calculateRSI(prices, 14)
+  const { data: indicators, isLoading, isError } = useTechnicalIndicators(
+    activeSymbol || null,
+    30,
+    !!activeSymbol
+  )
 
   return (
     <Card className="border-terminal-border bg-terminal-surface">
       <CardHeader>
-        <CardTitle className="text-sm font-medium">Technical Indicators</CardTitle>
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-sm font-medium">Technical Indicators</CardTitle>
+          <Select
+            value={activeSymbol}
+            onValueChange={(val) => setSelectedSymbol(val)}
+          >
+            <SelectTrigger className="w-32">
+              <SelectValue placeholder="Ticker" />
+            </SelectTrigger>
+            <SelectContent>
+              {tickers.map((ticker) => (
+                <SelectItem key={ticker} value={ticker}>
+                  {ticker}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex flex-wrap gap-2">
@@ -49,21 +69,80 @@ export function TechnicalIndicators({ symbol }: TechnicalIndicatorsProps) {
             RSI (14)
           </Button>
         </div>
-        {showSMA && (
-          <div className="text-xs text-muted-foreground">
-            SMA (20): {sma20.length > 0 ? sma20[sma20.length - 1].toFixed(2) : 'N/A'}
+
+        {isLoading ? (
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <div className="h-3 w-3 animate-spin rounded-full border border-accent border-t-transparent" />
+            Loading indicator data...
           </div>
-        )}
-        {showEMA && (
-          <div className="text-xs text-muted-foreground">
-            EMA (20): {ema20.length > 0 ? ema20[ema20.length - 1].toFixed(2) : 'N/A'}
-          </div>
-        )}
-        {showRSI && (
-          <div className="text-xs text-muted-foreground">
-            RSI (14): {rsi.toFixed(2)}
-            {rsi > 70 && <span className="ml-2 text-destructive">(Overbought)</span>}
-            {rsi < 30 && <span className="ml-2 text-success">(Oversold)</span>}
+        ) : isError ? (
+          <div className="text-xs text-muted-foreground">Failed to load indicators</div>
+        ) : !indicators || indicators.data_points === 0 ? (
+          <div className="text-xs text-muted-foreground">No price data available for indicators</div>
+        ) : (
+          <div className="space-y-2">
+            {/* Price summary */}
+            {indicators.latest_price != null && (
+              <div className="flex items-center justify-between rounded bg-muted/30 px-3 py-2 text-xs">
+                <span className="text-muted-foreground">Latest Price</span>
+                <div className="flex items-center gap-2">
+                  <span className="font-mono-numeric font-semibold">
+                    {indicators.latest_price.toFixed(2)} ETB
+                  </span>
+                  {indicators.price_change != null && (
+                    <span className={cn(
+                      'font-mono-numeric text-[10px]',
+                      indicators.price_change >= 0 ? 'text-success' : 'text-destructive'
+                    )}>
+                      {indicators.price_change >= 0 ? '+' : ''}{indicators.price_change.toFixed(2)}
+                      ({indicators.price_change_percent?.toFixed(2)}%)
+                    </span>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {showSMA && (
+              <div className="flex items-center justify-between rounded bg-muted/30 px-3 py-2 text-xs">
+                <span className="text-muted-foreground">SMA (20)</span>
+                <span className="font-mono-numeric font-medium">
+                  {indicators.sma_20 != null ? indicators.sma_20.toFixed(2) : 'Insufficient data'}
+                </span>
+              </div>
+            )}
+            {showEMA && (
+              <div className="flex items-center justify-between rounded bg-muted/30 px-3 py-2 text-xs">
+                <span className="text-muted-foreground">EMA (20)</span>
+                <span className="font-mono-numeric font-medium">
+                  {indicators.ema_20 != null ? indicators.ema_20.toFixed(2) : 'Insufficient data'}
+                </span>
+              </div>
+            )}
+            {showRSI && (
+              <div className="flex items-center justify-between rounded bg-muted/30 px-3 py-2 text-xs">
+                <span className="text-muted-foreground">RSI (14)</span>
+                <span className="font-mono-numeric font-medium">
+                  {indicators.rsi_14 != null ? (
+                    <>
+                      {indicators.rsi_14.toFixed(2)}
+                      {indicators.rsi_signal === 'overbought' && (
+                        <span className="ml-2 text-destructive">(Overbought)</span>
+                      )}
+                      {indicators.rsi_signal === 'oversold' && (
+                        <span className="ml-2 text-success">(Oversold)</span>
+                      )}
+                      {indicators.rsi_signal === 'neutral' && (
+                        <span className="ml-2 text-muted-foreground">(Neutral)</span>
+                      )}
+                    </>
+                  ) : 'Insufficient data'}
+                </span>
+              </div>
+            )}
+
+            <div className="pt-1 text-[10px] text-muted-foreground/50">
+              Based on {indicators.data_points} data points over {indicators.period_days} days
+            </div>
           </div>
         )}
       </CardContent>

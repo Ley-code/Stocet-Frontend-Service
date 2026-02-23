@@ -35,13 +35,12 @@ export function TerminalHeader() {
 
   return (
     <div className="sticky top-0 z-50 border-b border-terminal-border bg-terminal-bg">
-      <div className="flex h-12 items-center justify-between border-b border-terminal-border bg-terminal-surface px-6">
+      <div className="flex h-12 items-center justify-between border-b border-terminal-border bg-terminal-surface pl-14 pr-6 md:px-6">
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-2">
             <div
-              className={`h-2 w-2 rounded-full ${
-                marketStatus === 'open' ? 'bg-success animate-pulse' : 'bg-muted-foreground'
-              }`}
+              className={`h-2 w-2 rounded-full ${marketStatus === 'open' ? 'bg-success animate-pulse' : 'bg-muted-foreground'
+                }`}
             />
             <span className="text-xs font-medium text-muted-foreground">
               Market {marketStatus === 'open' ? 'Open' : 'Closed'}
@@ -52,9 +51,8 @@ export function TerminalHeader() {
               <span className="text-xs text-muted-foreground">ESX Index: </span>
               <span className="font-mono-numeric font-semibold">{formatCurrency(esxIndex)}</span>
               <span
-                className={`ml-2 font-mono-numeric text-xs ${
-                  esxChange >= 0 ? 'text-success' : 'text-destructive'
-                }`}
+                className={`ml-2 font-mono-numeric text-xs ${esxChange >= 0 ? 'text-success' : 'text-destructive'
+                  }`}
               >
                 {esxChange >= 0 ? '+' : ''}
                 {formatPercent(esxChangePercent)}

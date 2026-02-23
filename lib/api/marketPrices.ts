@@ -3,6 +3,7 @@ export {
   fetchTickers,
   fetchTickerPrice,
   fetchPriceHistory,
+  fetchTechnicalIndicators,
 } from './client'
 export type {
   MarketPrice,
@@ -10,4 +11,5 @@ export type {
   TickerListResponse,
   PriceHistoryResponse,
   PriceHistoryFilters,
+  TechnicalIndicatorsResponse,
 } from './types'

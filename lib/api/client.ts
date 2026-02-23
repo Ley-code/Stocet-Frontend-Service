@@ -6,6 +6,7 @@ import {
   MarketPrice,
   PriceHistoryResponse,
   PriceHistoryFilters,
+  TechnicalIndicatorsResponse,
 } from './types'
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_NEWS_API_URL || 'http://localhost:8000'
@@ -198,3 +199,35 @@ export async function fetchPriceHistory(
     )
   }
 }
+
+export async function fetchTechnicalIndicators(
+  ticker: string,
+  periodDays: number = 30
+): Promise<TechnicalIndicatorsResponse> {
+  const params = new URLSearchParams()
+  params.append('period_days', periodDays.toString())
+
+  const url = `${API_BASE_URL}/api/${API_VERSION}/market-prices/${encodeURIComponent(ticker)}/indicators?${params.toString()}`
+
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+      },
+      next: { revalidate: 60 },
+    })
+
+    return handleResponse<TechnicalIndicatorsResponse>(response)
+  } catch (error) {
+    if (error instanceof ApiError) {
+      throw error
+    }
+    throw new ApiError(
+      `Network error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      0,
+      'Network Error'
+    )
+  }
+}
+

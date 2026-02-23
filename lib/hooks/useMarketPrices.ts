@@ -4,6 +4,7 @@ import {
   fetchTickers,
   fetchTickerPrice,
   fetchPriceHistory,
+  fetchTechnicalIndicators,
   type PriceHistoryFilters,
 } from '@/lib/api/marketPrices'
 
@@ -74,3 +75,24 @@ export function usePriceHistory(
     refetchInterval: PRICE_HISTORY_STALE_TIME,
   })
 }
+
+/**
+ * Hook to fetch technical indicators for a specific ticker
+ * @param ticker - The ticker symbol
+ * @param periodDays - Number of days for indicator computation (default: 30)
+ * @param enabled - Whether the query should be enabled (default: true)
+ */
+export function useTechnicalIndicators(
+  ticker: string | null,
+  periodDays: number = 30,
+  enabled: boolean = true
+) {
+  return useQuery({
+    queryKey: ['technicalIndicators', ticker, periodDays],
+    queryFn: () => fetchTechnicalIndicators(ticker!, periodDays),
+    enabled: enabled && !!ticker,
+    staleTime: MARKET_PRICE_STALE_TIME,
+    refetchInterval: MARKET_PRICE_STALE_TIME,
+  })
+}
+

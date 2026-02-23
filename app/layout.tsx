@@ -12,7 +12,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Stocet - Ethiopian Capital Markets Terminal',
-  description: 'Bloomberg-style Ethiopian capital markets data terminal and education platform',
+  description: 'Ethiopian capital markets data terminal and education platform',
 }
 
 export default function RootLayout({

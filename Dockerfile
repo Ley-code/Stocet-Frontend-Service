@@ -4,7 +4,10 @@
 
   # Copy package files
   COPY package.json package-lock.json* ./
-  RUN npm ci
+  # Use --prefer-offline and --no-audit to reduce space and network usage
+  # Clean npm cache after installation to free space
+  RUN npm ci --prefer-offline --no-audit && \
+      npm cache clean --force
 
   # Stage 2: Builder
   FROM node:20-slim AS builder
@@ -23,7 +26,10 @@
   COPY . .
 
   # Build the application
-  RUN npm run build
+  # Clean npm cache and remove dev dependencies after build to save space
+  RUN npm run build && \
+      npm cache clean --force && \
+      rm -rf node_modules/.cache
 
   # Stage 3: Runner
   FROM node:20-slim AS runner

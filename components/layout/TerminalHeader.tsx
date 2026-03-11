@@ -5,8 +5,12 @@ import { TickerTape } from './TickerTape'
 import { formatTime } from '@/lib/utils'
 import { stocksData } from '@/lib/mock-data'
 import { formatCurrency, formatPercent } from '@/lib/utils'
+import { useAuthContext } from '@/lib/providers/AuthProvider'
+import { Badge } from '@/components/ui/badge'
+import { Shield } from 'lucide-react'
 
 export function TerminalHeader() {
+  const { user, isAdmin } = useAuthContext()
   const [mounted, setMounted] = useState(false)
   const [time, setTime] = useState<Date | null>(null)
   const [marketStatus, setMarketStatus] = useState<'open' | 'closed'>('open')
@@ -60,8 +64,21 @@ export function TerminalHeader() {
             </div>
           </div>
         </div>
-        <div className="font-mono-numeric text-xs text-muted-foreground">
-          {mounted && time ? formatTime(time) : '--:--:--'}
+        <div className="flex items-center gap-4">
+          {user && (
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-terminal-muted">{user.email}</span>
+              {isAdmin && (
+                <Badge variant="default" className="bg-primary/20 text-primary border-primary/30 text-xs">
+                  <Shield className="h-3 w-3 mr-1" />
+                  Admin
+                </Badge>
+              )}
+            </div>
+          )}
+          <div className="font-mono-numeric text-xs text-muted-foreground">
+            {mounted && time ? formatTime(time) : '--:--:--'}
+          </div>
         </div>
       </div>
       <TickerTape />

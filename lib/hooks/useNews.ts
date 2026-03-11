@@ -4,7 +4,11 @@ import { fetchNews, type NewsFilters, type NewsResponse } from '@/lib/api/news'
 export function useNews(filters: NewsFilters = {}) {
   return useQuery({
     queryKey: ['news', filters],
-    queryFn: () => fetchNews(filters),
+    queryFn: async () => {
+      const response = await fetchNews(filters)
+      // Return the data field from structured response
+      return response.data
+    },
     staleTime: 5 * 60 * 1000, // 5 minutes
   })
 }
@@ -12,8 +16,11 @@ export function useNews(filters: NewsFilters = {}) {
 export function useNewsInfinite(filters: Omit<NewsFilters, 'skip'> = {}) {
   return useInfiniteQuery({
     queryKey: ['news', 'infinite', filters],
-    queryFn: ({ pageParam = 0 }) =>
-      fetchNews({ ...filters, skip: pageParam, limit: filters.limit || 20 }),
+    queryFn: async ({ pageParam = 0 }) => {
+      const response = await fetchNews({ ...filters, skip: pageParam, limit: filters.limit || 20 })
+      // Return the data field from structured response
+      return response.data
+    },
     getNextPageParam: (lastPage, allPages) => {
       const totalLoaded = allPages.reduce((sum, page) => sum + page.articles.length, 0)
       return totalLoaded < lastPage.total ? totalLoaded : undefined

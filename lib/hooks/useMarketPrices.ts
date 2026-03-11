@@ -19,7 +19,10 @@ const PRICE_HISTORY_STALE_TIME = 5 * 60 * 1000 // 5 minutes (historical data cha
 export function useMarketPrices() {
   return useQuery({
     queryKey: ['marketPrices'],
-    queryFn: () => fetchMarketPrices(),
+    queryFn: async () => {
+      const response = await fetchMarketPrices()
+      return response.data
+    },
     staleTime: MARKET_PRICE_STALE_TIME,
     refetchInterval: MARKET_PRICE_STALE_TIME, // Auto-refresh every minute
     refetchOnWindowFocus: true,
@@ -33,7 +36,10 @@ export function useMarketPrices() {
 export function useTickers() {
   return useQuery({
     queryKey: ['tickers'],
-    queryFn: () => fetchTickers(),
+    queryFn: async () => {
+      const response = await fetchTickers()
+      return response.data
+    },
     staleTime: TICKER_LIST_STALE_TIME,
     refetchInterval: TICKER_LIST_STALE_TIME,
   })
@@ -47,7 +53,10 @@ export function useTickers() {
 export function useTickerPrice(ticker: string | null, enabled: boolean = true) {
   return useQuery({
     queryKey: ['tickerPrice', ticker],
-    queryFn: () => fetchTickerPrice(ticker!),
+    queryFn: async () => {
+      const response = await fetchTickerPrice(ticker!)
+      return response.data
+    },
     enabled: enabled && !!ticker,
     staleTime: MARKET_PRICE_STALE_TIME,
     refetchInterval: MARKET_PRICE_STALE_TIME,
@@ -69,7 +78,10 @@ export function usePriceHistory(
 ) {
   return useQuery({
     queryKey: ['priceHistory', ticker, filters],
-    queryFn: () => fetchPriceHistory(ticker!, filters),
+    queryFn: async () => {
+      const response = await fetchPriceHistory(ticker!, filters)
+      return response.data
+    },
     enabled: enabled && !!ticker,
     staleTime: PRICE_HISTORY_STALE_TIME,
     refetchInterval: PRICE_HISTORY_STALE_TIME,
@@ -89,7 +101,10 @@ export function useTechnicalIndicators(
 ) {
   return useQuery({
     queryKey: ['technicalIndicators', ticker, periodDays],
-    queryFn: () => fetchTechnicalIndicators(ticker!, periodDays),
+    queryFn: async () => {
+      const response = await fetchTechnicalIndicators(ticker!, periodDays)
+      return response.data
+    },
     enabled: enabled && !!ticker,
     staleTime: MARKET_PRICE_STALE_TIME,
     refetchInterval: MARKET_PRICE_STALE_TIME,

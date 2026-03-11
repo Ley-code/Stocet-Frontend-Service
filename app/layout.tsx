@@ -1,12 +1,10 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import { SidebarNav } from '@/components/layout/SidebarNav'
-import { TerminalHeader } from '@/components/layout/TerminalHeader'
-import { KeyboardShortcuts } from '@/components/shared/KeyboardShortcuts'
 import { QueryProvider } from '@/lib/providers/QueryProvider'
 import { SidebarProvider } from '@/lib/providers/SidebarProvider'
-import { MainContent } from '@/components/layout/MainContent'
+import { AuthProvider } from '@/lib/providers/AuthProvider'
+import { AppLayout } from '@/components/layout/AppLayout'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,18 +22,11 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className={inter.className}>
         <QueryProvider>
-          <SidebarProvider>
-            <div className="flex h-screen overflow-hidden">
-              <SidebarNav />
-              <MainContent>
-                <TerminalHeader />
-                <main className="flex-1 overflow-y-auto bg-terminal-bg p-4 md:p-6">
-                  {children}
-                </main>
-              </MainContent>
-            </div>
-            <KeyboardShortcuts />
-          </SidebarProvider>
+          <AuthProvider>
+            <SidebarProvider>
+              <AppLayout>{children}</AppLayout>
+            </SidebarProvider>
+          </AuthProvider>
         </QueryProvider>
       </body>
     </html>

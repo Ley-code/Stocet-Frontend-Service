@@ -7,10 +7,32 @@ import {
   PriceHistoryResponse,
   PriceHistoryFilters,
   TechnicalIndicatorsResponse,
+  APIResponse,
 } from './types'
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_NEWS_API_URL || 'http://localhost:8000'
-const API_VERSION = process.env.NEXT_PUBLIC_NEWS_API_VERSION || 'v1'
+const API_BASE_URL = process.env.NEXT_PUBLIC_CORE_API_URL || 'http://localhost:8080'
+const API_VERSION = process.env.NEXT_PUBLIC_CORE_API_VERSION || 'v1'
+
+// Token storage key
+const TOKEN_STORAGE_KEY = 'stocet_auth_token'
+
+// Get stored auth token
+export function getAuthToken(): string | null {
+  if (typeof window === 'undefined') return null
+  return localStorage.getItem(TOKEN_STORAGE_KEY)
+}
+
+// Set auth token
+export function setAuthToken(token: string): void {
+  if (typeof window === 'undefined') return
+  localStorage.setItem(TOKEN_STORAGE_KEY, token)
+}
+
+// Clear auth token
+export function clearAuthToken(): void {
+  if (typeof window === 'undefined') return
+  localStorage.removeItem(TOKEN_STORAGE_KEY)
+}
 
 class ApiError extends Error {
   constructor(
@@ -24,16 +46,55 @@ class ApiError extends Error {
 }
 
 async function handleResponse<T>(response: Response): Promise<T> {
+  const json = await response.json()
+  
   if (!response.ok) {
-    const errorText = await response.text().catch(() => response.statusText)
+    // Handle structured error response from core-service
+    const errorMessage = json.error || json.message || response.statusText
     throw new ApiError(
-      errorText || `API Error: ${response.status}`,
+      errorMessage || `API Error: ${response.status}`,
       response.status,
       response.statusText
     )
   }
 
-  return response.json()
+  // Core-service returns structured responses: {success, data, message}
+  // For health check and other non-structured endpoints, return as-is
+  if (response.url.includes('/health')) {
+    return json as T
+  }
+
+  // For structured responses, validate and return the data
+  if (json && typeof json === 'object' && 'success' in json && 'data' in json) {
+    if (!json.success) {
+      throw new ApiError(
+        json.error || json.message || 'Request failed',
+        response.status,
+        response.statusText
+      )
+    }
+    return json as T
+  }
+
+  // Fallback for non-structured responses
+  return json as T
+}
+
+// Helper to get headers with auth token
+function getHeaders(includeAuth: boolean = true): HeadersInit {
+  const headers: HeadersInit = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+  }
+
+  if (includeAuth) {
+    const token = getAuthToken()
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`
+    }
+  }
+
+  return headers
 }
 
 export async function fetchNews(filters: NewsFilters = {}): Promise<NewsResponse> {
@@ -52,15 +113,17 @@ export async function fetchNews(filters: NewsFilters = {}): Promise<NewsResponse
   try {
     const response = await fetch(url, {
       method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-      },
+      headers: getHeaders(true), // News endpoint requires authentication
       next: { revalidate: 300 }, // Revalidate every 5 minutes
     })
 
     return handleResponse<NewsResponse>(response)
   } catch (error) {
     if (error instanceof ApiError) {
+      // Handle 401 Unauthorized - clear token and potentially redirect
+      if (error.status === 401) {
+        clearAuthToken()
+      }
       throw error
     }
     throw new ApiError(
@@ -77,9 +140,7 @@ export async function fetchNewsHealth(): Promise<{ status: string }> {
   try {
     const response = await fetch(url, {
       method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-      },
+      headers: getHeaders(false), // Health check doesn't require auth
     })
 
     return handleResponse<{ status: string }>(response)
@@ -99,15 +160,16 @@ export async function fetchMarketPrices(): Promise<MarketPriceListResponse> {
   try {
     const response = await fetch(url, {
       method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-      },
+      headers: getHeaders(true),
       next: { revalidate: 60 }, // Revalidate every minute (prices change frequently)
     })
 
     return handleResponse<MarketPriceListResponse>(response)
   } catch (error) {
     if (error instanceof ApiError) {
+      if (error.status === 401) {
+        clearAuthToken()
+      }
       throw error
     }
     throw new ApiError(
@@ -124,15 +186,16 @@ export async function fetchTickers(): Promise<TickerListResponse> {
   try {
     const response = await fetch(url, {
       method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-      },
+      headers: getHeaders(true),
       next: { revalidate: 300 }, // Revalidate every 5 minutes (ticker list changes infrequently)
     })
 
     return handleResponse<TickerListResponse>(response)
   } catch (error) {
     if (error instanceof ApiError) {
+      if (error.status === 401) {
+        clearAuthToken()
+      }
       throw error
     }
     throw new ApiError(
@@ -143,21 +206,22 @@ export async function fetchTickers(): Promise<TickerListResponse> {
   }
 }
 
-export async function fetchTickerPrice(ticker: string): Promise<MarketPrice> {
+export async function fetchTickerPrice(ticker: string): Promise<APIResponse<MarketPrice>> {
   const url = `${API_BASE_URL}/api/${API_VERSION}/market-prices/${encodeURIComponent(ticker)}`
 
   try {
     const response = await fetch(url, {
       method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-      },
+      headers: getHeaders(true),
       next: { revalidate: 60 }, // Revalidate every minute
     })
 
-    return handleResponse<MarketPrice>(response)
+    return handleResponse<APIResponse<MarketPrice>>(response)
   } catch (error) {
     if (error instanceof ApiError) {
+      if (error.status === 401) {
+        clearAuthToken()
+      }
       throw error
     }
     throw new ApiError(
@@ -181,15 +245,16 @@ export async function fetchPriceHistory(
   try {
     const response = await fetch(url, {
       method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-      },
+      headers: getHeaders(true),
       next: { revalidate: 300 }, // Revalidate every 5 minutes (historical data changes less frequently)
     })
 
     return handleResponse<PriceHistoryResponse>(response)
   } catch (error) {
     if (error instanceof ApiError) {
+      if (error.status === 401) {
+        clearAuthToken()
+      }
       throw error
     }
     throw new ApiError(
@@ -212,15 +277,16 @@ export async function fetchTechnicalIndicators(
   try {
     const response = await fetch(url, {
       method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-      },
+      headers: getHeaders(true),
       next: { revalidate: 60 },
     })
 
     return handleResponse<TechnicalIndicatorsResponse>(response)
   } catch (error) {
     if (error instanceof ApiError) {
+      if (error.status === 401) {
+        clearAuthToken()
+      }
       throw error
     }
     throw new ApiError(

@@ -1,3 +1,11 @@
+// Core-service API Response wrapper
+export interface APIResponse<T> {
+  success: boolean
+  data: T
+  message?: string
+  error?: string
+}
+
 export interface NewsArticle {
   title: string
   url: string
@@ -10,12 +18,14 @@ export interface NewsArticle {
   category?: string
 }
 
-export interface NewsResponse {
+export interface NewsResponseData {
   articles: NewsArticle[]
   total: number
   limit: number
   skip: number
 }
+
+export type NewsResponse = APIResponse<NewsResponseData>
 
 export interface NewsFilters {
   q?: string
@@ -53,28 +63,34 @@ export interface MarketPrice {
   source: string
 }
 
-export interface MarketPriceListResponse {
+export interface MarketPriceListResponseData {
   prices: MarketPrice[]
   total: number
 }
 
-export interface TickerListResponse {
+export type MarketPriceListResponse = APIResponse<MarketPriceListResponseData>
+
+export interface TickerListResponseData {
   tickers: string[]
   total: number
 }
 
-export interface PriceHistoryResponse {
+export type TickerListResponse = APIResponse<TickerListResponseData>
+
+export interface PriceHistoryResponseData {
   ticker_symbol: string
   prices: MarketPrice[]
   total: number
 }
+
+export type PriceHistoryResponse = APIResponse<PriceHistoryResponseData>
 
 export interface PriceHistoryFilters {
   start_date?: string
   end_date?: string
 }
 
-export interface TechnicalIndicatorsResponse {
+export interface TechnicalIndicatorsResponseData {
   ticker_symbol: string
   period_days: number
   data_points: number
@@ -85,5 +101,32 @@ export interface TechnicalIndicatorsResponse {
   latest_price: number | null
   price_change: number | null
   price_change_percent: number | null
+}
+
+export type TechnicalIndicatorsResponse = APIResponse<TechnicalIndicatorsResponseData>
+
+// Authentication types
+export interface User {
+  id: string
+  email: string
+  role: string
+  subscription_status?: string
+}
+
+export interface AuthResponse {
+  token: string
+  user: User
+}
+
+export type AuthResponseWrapper = APIResponse<AuthResponse>
+
+export interface LoginRequest {
+  email: string
+  password: string
+}
+
+export interface SignupRequest {
+  email: string
+  password: string
 }
 
